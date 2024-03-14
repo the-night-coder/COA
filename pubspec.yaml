@@ -39,16 +39,16 @@ dependencies:
   package_info_plus:
   shared_preferences:
   flutter_bloc:
-  http:
-  url_launcher:
+  http: ^1.2.1
+  url_launcher: ^6.2.5
   shimmer:
-  otp_timer_button:
+  otp_timer_button: ^1.1.1
   otp_text_field: ^1.1.3
   carousel_slider: ^4.2.1
   image_picker: ^1.0.7
-  qr: ^3.0.1
   image_cropper: ^5.0.1
   dropdown_button2: ^2.3.9
+  qr_flutter: ^4.1.0
 
 dev_dependencies:
   flutter_test:

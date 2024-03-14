@@ -1,5 +1,5 @@
 class C {
-  static const baseUrl = 'https://coa.attr.in/coa-app/public/api/v1';
+  static const baseUrl = 'http://coa.attr.in/coa-app/public/api/v1';
 
   //APIs
   static const loginOtp = '/members/otp/generation';

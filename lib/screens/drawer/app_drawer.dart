@@ -21,7 +21,6 @@ class AppDrawer extends StatefulWidget {
 
 class _AppDrawerState extends State<AppDrawer> {
   dynamic _user;
-  String _userType = 'Operator';
 
   @override
   void initState() {
@@ -31,9 +30,7 @@ class _AppDrawerState extends State<AppDrawer> {
 
   Future<void> _getUser() async {
     _user = jsonDecode(await Pref.getUser() ?? '');
-    _userType = await Pref.getUserType() ?? 'Operator';
     setState(() {});
-    print(_userType);
     print(_user);
   }
 
@@ -59,26 +56,43 @@ class _AppDrawerState extends State<AppDrawer> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Container(
-                      padding: const EdgeInsets.all(15),
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(100),
-                          border:
-                              Border.all(width: 2, color: AppColors.success)),
-                      child: const ClipOval(
-                        child: Icon(Icons.person_rounded),
-                      ),
+                          border: Border.all(
+                              width: 2,
+                              color: _user['is_approved'] == 'approved'
+                                  ? AppColors.success
+                                  : AppColors.danger)),
+                      child: Builder(builder: (context) {
+                        if (((_user['media'] ?? []) as List<dynamic>).isEmpty) {
+                          return const ClipOval(
+                            child: Padding(
+                              padding: EdgeInsets.all(15),
+                              child: Icon(Icons.person_rounded),
+                            ),
+                          );
+                        } else {
+                          return ClipOval(
+                            child: Image.network(
+                              (_user['media']?[0]?['original_url'])
+                                  .toString()
+                                  .replaceAll('https', 'http'),
+                              width: 60,
+                              height: 60,
+                            ),
+                          );
+                        }
+                      }),
                     ),
                     const SizedBox(height: 15),
                     AppText.boldText(
                         _user == null
-                            ? 'Anilkumar K A'
-                            : _user['user']?['name'] ?? '',
+                            ? 'Loading'
+                            : (_user['name'] ?? '').toString().toUpperCase(),
                         color: AppColors.text,
                         size: 16),
                     AppText.mediumText(
-                        _user == null
-                            ? 'COA/23432/4556324'
-                            : _user['user']?['email'] ?? '',
+                        _user == null ? 'Loading' : _user['register_no'] ?? '',
                         color: AppColors.hint,
                         size: 13)
                   ],
@@ -134,8 +148,8 @@ class _AppDrawerState extends State<AppDrawer> {
             title: AppText.mediumText('Find a Member', size: 16),
             onTap: () {
               Navigator.pop(context);
-              Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => const FindMember()));
+              Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => const FindMember()));
             },
           ),
           ListTile(
@@ -152,8 +166,8 @@ class _AppDrawerState extends State<AppDrawer> {
             title: AppText.mediumText('Help and Support', size: 16),
             onTap: () {
               Navigator.pop(context);
-              Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => const HelpSupport()));
+              Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => const HelpSupport()));
             },
           ),
           ListTile(
@@ -204,6 +218,8 @@ class _AppDrawerState extends State<AppDrawer> {
                     onPressed: () async {
                       Navigator.pop(dialog);
                       await Pref.setToken(null);
+                      await Pref.setUser(null);
+                      await Pref.setDash(null);
                       Navigator.of(dialog)
                           .pushNamedAndRemoveUntil('/login', (route) => false);
                     },

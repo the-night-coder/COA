@@ -113,11 +113,6 @@ class _LoginScreenState extends State<LoginScreen> {
           if (state is LoginFailed) {
             context.errorSnackBar(state.message);
           } else if (state is OTPSent) {
-            // context.successSnackBar('Logged in');
-            // await Pref.setToken(state.data['data']['token']);
-            // await Pref.setUser(jsonEncode(state.data['data']));
-            // await Pref.setUserType(_isOperator ? 'Operator' : 'Staff');
-            // _routeDashboard();
             _routeOtpScreen();
           }
         },

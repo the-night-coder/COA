@@ -151,14 +151,8 @@ class _OtpScreenState extends State<OtpScreen> {
             context.errorSnackBar(state.message);
           } else if (state is LoginSuccess) {
             context.successSnackBar('Logged in');
-            await Pref.setToken('hdghgsdgjv');
-            // await Pref.setUser(jsonEncode(state.data['data']));
-            // await Pref.setUserType(_isOperator ? 'Operator' : 'Staff');
             _routeDashboard();
           }
-          // setState(() {
-          //   _loading = state is LoginRequested;
-          // });
         },
         builder: (context, state) {
           if (state is LoginRequested) {

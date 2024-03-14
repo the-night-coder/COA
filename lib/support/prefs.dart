@@ -26,6 +26,11 @@ class Pref {
     pref.setString('user', token ?? '');
   }
 
+  static Future<void> setDash(String? token) async {
+    final SharedPreferences pref = await SharedPreferences.getInstance();
+    pref.setString('dash', token ?? '');
+  }
+
   static Future<void> setUserType(String? token) async {
     final SharedPreferences pref = await SharedPreferences.getInstance();
     pref.setString('userType', token ?? '');
@@ -34,6 +39,11 @@ class Pref {
   static Future<String?> getUser() async {
     final SharedPreferences pref = await SharedPreferences.getInstance();
     return pref.getString('user');
+  }
+
+  static Future<String?> getDash() async {
+    final SharedPreferences pref = await SharedPreferences.getInstance();
+    return pref.getString('dash');
   }
 
   static Future<String?> getUserType() async {

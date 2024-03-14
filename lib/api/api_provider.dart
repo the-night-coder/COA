@@ -23,6 +23,7 @@ class ApiProvider {
       var res = await request.send();
       return returnResponse(await http.Response.fromStream(res));
     } catch (e) {
+      print(e);
       return ApiResponse.error('No Internet connection');
     }
   }

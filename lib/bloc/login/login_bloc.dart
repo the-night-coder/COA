@@ -1,9 +1,11 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../api/api_model.dart';
 import '../../api/api_repo.dart';
+import '../../support/prefs.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
   final _repo = ApiRepository();
@@ -18,25 +20,24 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     emit(OTPRequested());
     ApiResponse res = await _repo.getLoginOtp(event.mobile);
     if (res.status) {
-      emit(OTPSent(res.data));
+      emit(OTPSent(res.message ?? 'OTP has been sent'));
     } else {
       emit(LoginFailed(res.message.toString()));
     }
     print(res.data);
   }
 
-  FutureOr<void> _getLogin(
-      RequestLogin event, Emitter<LoginState> emit) async {
+  FutureOr<void> _getLogin(RequestLogin event, Emitter<LoginState> emit) async {
     emit(LoginRequested());
-    // ApiResponse res = await _repo.getLoginOtp(event.mobile);
-    // if (res.status) {
-    //   emit(OTPSent(res.data));
-    // } else {
-    //   emit(LoginFailed(res.message.toString()));
-    // }
-    // print(res.data);
-    await Future.delayed(const Duration(seconds: 5));
-    emit(LoginSuccess(null));
+    ApiResponse res = await _repo.getLoginWithOtp(event.mobile, event.otp);
+    if (res.status) {
+      await Pref.setToken(res.data['data']?['token']);
+      await Pref.setUser(jsonEncode(res.data['data']?['member']));
+      emit(LoginSuccess(res.data));
+    } else {
+      emit(LoginFailed(res.message.toString()));
+    }
+    print(res.data);
   }
 }
 
@@ -60,7 +61,9 @@ class RequestLogin extends LoginEvent {
 }
 
 class OTPRequested extends LoginState {}
+
 class LoginRequested extends LoginState {}
+
 class LoginSuccess extends LoginState {
   final dynamic data;
 

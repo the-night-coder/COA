@@ -1,7 +1,13 @@
+import 'dart:convert';
+
+import 'package:coa/bloc/dashboard/dashboard_bloc.dart';
 import 'package:coa/support/app_text.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../support/app_colors.dart';
+import '../../support/prefs.dart';
 
 class ProfileView extends StatefulWidget {
   const ProfileView({super.key});
@@ -11,6 +17,22 @@ class ProfileView extends StatefulWidget {
 }
 
 class _ProfileViewState extends State<ProfileView> {
+  final _bloc = DashboardBloc();
+  dynamic _user;
+
+  @override
+  void initState() {
+    _bloc.add(DashboardBlocLoadEvent());
+    _getUser();
+    super.initState();
+  }
+
+  Future<void> _getUser() async {
+    _user = jsonDecode(await Pref.getUser() ?? '');
+    setState(() {});
+    print(_user);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,27 +44,37 @@ class _ProfileViewState extends State<ProfileView> {
     );
   }
 
-  _body() => SingleChildScrollView(
-    padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: Column(
-          children: [
-            const SizedBox(height: 20),
-            _header(),
-            const SizedBox(height: 20),
-            AppText.boldText('Anilkumar K A', size: 16),
-            const SizedBox(height: 5),
-            AppText.boldText('COA/23432/4556324',
-                size: 16, color: AppColors.hint),
-            const SizedBox(height: 20),
-            _item('Mobile No.', '6635781412'),
-            _item('WhatsApp No.', '6635781412'),
-            _item('Name', 'Anilkumar K A'),
-            _item('Email', 'sample@gmail.com'),
-            _item('District', 'Ernakulam'),
-            _item('Mekhala', 'Kochi'),
-          ],
-        ),
-      );
+  _body() => BlocConsumer(
+      bloc: _bloc,
+      listener: (context, state) {
+        if (state is DashboardBlocSuccess) {
+          _getUser();
+        }
+      },
+      builder: (context, state) {
+        return SingleChildScrollView(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: Column(
+            children: [
+              const SizedBox(height: 20),
+              _header(_user['media']?[0]?['original_url']),
+              const SizedBox(height: 20),
+              AppText.boldText(_user['name'] ?? 'Loading', size: 16),
+              const SizedBox(height: 5),
+              AppText.boldText(_user['register_no'] ?? 'Loading',
+                  size: 16, color: AppColors.hint),
+              const SizedBox(height: 20),
+              _item('Mobile No.', _user['mobile'] ?? 'Loading'),
+              _item('WhatsApp No.',
+                  _user['whatsapp_number'] ?? _user['mobile'] ?? 'Loading'),
+              _item('Name', _user['name'] ?? 'Loading'),
+              _item('Email', _user['email'] ?? 'Loading'),
+              _item('District', _user['district_name'] ?? 'Loading'),
+              _item('Mekhala', _user['mekhala_name'] ?? 'Loading'),
+            ],
+          ),
+        );
+      });
 
   _item(String title, String value) => Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -52,16 +84,17 @@ class _ProfileViewState extends State<ProfileView> {
           Container(
             padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(15),
-              color: AppColors.primaryLight
-            ),
+                borderRadius: BorderRadius.circular(15),
+                color: AppColors.primaryLight),
             child: AppText.mediumText(value),
           ),
           const SizedBox(height: 15),
         ],
       );
 
-  _header() => Center(
+  _header(String? url) {
+    if (url == null) {
+      return Center(
         child: Container(
           height: 100,
           width: 100,
@@ -77,4 +110,18 @@ class _ProfileViewState extends State<ProfileView> {
           ),
         ),
       );
+    } else {
+      return Center(
+        child: Container(
+          height: 100,
+          width: 100,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(100),
+              border: Border.all(width: 2, color: AppColors.success)),
+          child: ClipOval(
+              child: Image.network(url.toString().replaceAll('https', 'http'))),
+        ),
+      );
+    }
+  }
 }
