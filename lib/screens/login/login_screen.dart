@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:coa/screens/otp/otp_screen.dart';
+import 'package:coa/screens/registration/mobile_verification.dart';
 import 'package:coa/support/widget_utils.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -70,7 +71,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
   _signUpButton() => TextButton(
         onPressed: () {
-          context.launchLink('http://reg.coakerala.com');
+          // context.launchLink('http://reg.coakerala.com');
+          Navigator.of(context).push(MaterialPageRoute(builder: (context)=> MobileVerification()));
         },
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,

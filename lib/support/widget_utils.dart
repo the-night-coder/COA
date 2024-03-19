@@ -34,6 +34,8 @@ extension AppSnackBars on BuildContext {
       builder: (context) => AlertDialog(
             surfaceTintColor: AppColors.white,
             title: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Icon(
                   Icons.error,

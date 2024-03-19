@@ -205,15 +205,16 @@ class _AppDrawerState extends State<AppDrawer> {
     showDialog(
         context: context,
         builder: (dialog) => AlertDialog(
+              surfaceTintColor: AppColors.white,
               backgroundColor: AppColors.white,
-              title: AppText.boldText('Logout?'),
+              title: AppText.boldText('Logout?', size: 18),
               content: AppText.mediumText('Are you sure you want to logout?'),
               actions: [
                 TextButton(
                     onPressed: () {
                       Navigator.pop(dialog);
                     },
-                    child: AppText.mediumText('Cancel')),
+                    child: AppText.boldText('Cancel')),
                 TextButton(
                     onPressed: () async {
                       Navigator.pop(dialog);
@@ -224,7 +225,7 @@ class _AppDrawerState extends State<AppDrawer> {
                           .pushNamedAndRemoveUntil('/login', (route) => false);
                     },
                     child:
-                        AppText.mediumText('Logout', color: AppColors.danger)),
+                        AppText.boldText('Logout', color: AppColors.danger)),
               ],
             ).build(dialog));
   }

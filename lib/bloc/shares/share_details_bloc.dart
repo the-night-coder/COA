@@ -40,7 +40,7 @@ class ShareDetailsFailed extends ShareDetailsBlocState {
 }
 
 class ShareDetailsSuccess extends ShareDetailsBlocState {
-  final List<dynamic> data;
+  final dynamic data;
 
   ShareDetailsSuccess(this.data);
 }

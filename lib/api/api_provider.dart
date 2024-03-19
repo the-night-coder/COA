@@ -87,6 +87,8 @@ class ApiProvider {
         uri,
       );
       request.headers.addAll({'Authorization': 'Bearer $token'});
+      print(request.headers);
+      print(request.fields);
       var res = await request.send();
       return returnResponse(await http.Response.fromStream(res));
     } catch (e) {

@@ -6,6 +6,7 @@ import 'dart:ui';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:coa/api/api_repo.dart';
 import 'package:coa/bloc/dashboard/dashboard_bloc.dart';
+import 'package:coa/bloc/shares/share_details_bloc.dart';
 import 'package:coa/bloc/slider/slider_bloc.dart';
 import 'package:coa/screens/broadband_view/broadband_view.dart';
 import 'package:coa/screens/broadbands/broadbands.dart';
@@ -14,6 +15,7 @@ import 'package:coa/screens/drawer/app_drawer.dart';
 import 'package:coa/screens/help/help_support.dart';
 import 'package:coa/screens/id_card/id_card.dart';
 import 'package:coa/screens/settings/settings.dart';
+import 'package:coa/screens/shares/shares.dart';
 import 'package:coa/support/app_colors.dart';
 import 'package:coa/support/app_icons.dart';
 import 'package:coa/support/app_text.dart';
@@ -40,6 +42,7 @@ class Dashboard extends StatefulWidget {
 class _DashboardState extends State<Dashboard> {
   final ImagePicker picker = ImagePicker();
   final _bloc = DashboardBloc();
+  final _shareBloc = ShareDetailsBloc();
   dynamic _user;
   dynamic _dash;
 
@@ -49,6 +52,7 @@ class _DashboardState extends State<Dashboard> {
         statusBarColor: Colors.transparent,
         systemNavigationBarColor: AppColors.primary));
     _bloc.add(DashboardBlocLoadEvent());
+    _shareBloc.add(LoadShareDetailsEvent());
     _getUser();
     _getDash();
     super.initState();
@@ -471,20 +475,45 @@ class _DashboardState extends State<Dashboard> {
                     const SizedBox(height: 30),
                     AppText.boldText('Shares'),
                     const SizedBox(height: 15),
-                    Wrap(
-                      alignment: WrapAlignment.start,
-                      children: [
-                        _listIte('CIDCO'),
-                        const SizedBox(width: 15),
-                        _listIte('KCCL'),
-                        const SizedBox(width: 15),
-                        _listIte('KVBL'),
-                        const SizedBox(width: 15),
-                        _listIte('KCBL'),
-                        const SizedBox(width: 15),
-                        _listIte('NEWS'),
-                      ],
-                    )
+                    BlocBuilder(
+                        bloc: _shareBloc,
+                        builder: (context, state) {
+                          if (state is ShareDetailsSuccess) {
+                            return Wrap(
+                              alignment: WrapAlignment.start,
+                              children: [
+                                _shareTile(state.data, 'kccl_folio', 'KCCL'),
+                                _shareTile(state.data, 'kcbl_folio', 'KCBL'),
+                                _shareTile(state.data, 'kvbl_folio', 'KVBL'),
+                                _shareTile(state.data, 'kvnews_folio', 'NEWS'),
+                                _shareTile(state.data, 'cidco_membership', 'CIDO'),
+                                // _shareTile(state.data, 'broadband_share', 'CIDO'),
+                              ],
+                            );
+                          } else if (state is ShareDetailsFailed) {
+                            return Column(
+                              children: [
+                                AppText.mediumText(state.message),
+                                TextButton(
+                                    onPressed: () {
+                                      _shareBloc.add(LoadShareDetailsEvent());
+                                    },
+                                    child: AppText.boldText('Retry')),
+                              ],
+                            );
+                          }
+
+                          return Shimmer.fromColors(
+                            baseColor: AppColors.primaryLight,
+                            highlightColor: AppColors.primary,
+                            child: Container(
+                              height: 150,
+                              decoration: BoxDecoration(
+                                  color: AppColors.primary,
+                                  borderRadius: BorderRadius.circular(10)),
+                            ),
+                          );
+                        })
                   ],
                 ),
               ),
@@ -492,6 +521,13 @@ class _DashboardState extends State<Dashboard> {
           ],
         );
       });
+
+  _shareTile(dynamic data, String key, String title) {
+    if (((data['shares']?[key] ?? []) as List<dynamic>).isNotEmpty) {
+      return _listIte(title, data['shares']?[key], key);
+    }
+    return const SizedBox(width: 0, height: 0);
+  }
 
   Builder _slider(List<dynamic> list) => Builder(builder: (context) {
         if (list.isNotEmpty) {
@@ -525,12 +561,15 @@ class _DashboardState extends State<Dashboard> {
         }
       });
 
-  _listIte(String title) => Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 7),
+  _listIte(String title, List<dynamic> data, String key) => Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 7),
         child: MaterialButton(
           onPressed: () {
-            Navigator.of(context)
-                .push(MaterialPageRoute(builder: (context) => BroadbandView()));
+            Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => Shares(
+                      list: data,
+                      keyValue: key,
+                    )));
           },
           padding: const EdgeInsets.all(10),
           shape: RoundedRectangleBorder(

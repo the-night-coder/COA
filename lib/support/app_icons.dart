@@ -3,4 +3,5 @@ class AppIcons {
   static const cableTv = 'assets/images/cable-tv.png';
   static const wifiSignal = 'assets/images/router.png';
   static const shares = 'assets/images/pie-chart.png';
+  static const mobile = 'assets/images/pin.png';
 }

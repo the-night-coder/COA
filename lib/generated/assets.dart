@@ -19,6 +19,7 @@ class Assets {
   static const String imagesCableTv = 'assets/images/cable-tv.png';
   static const String imagesLogoCoa = 'assets/images/logo_coa.png';
   static const String imagesPieChart = 'assets/images/pie-chart.png';
+  static const String imagesPin = 'assets/images/pin.png';
   static const String imagesQr = 'assets/images/qr.png';
   static const String imagesRouter = 'assets/images/router.png';
   static const String imagesSmartTv = 'assets/images/smart-tv.png';
