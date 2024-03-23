@@ -14,6 +14,7 @@ import '../../support/app_icons.dart';
 import '../../support/app_text.dart';
 import '../../support/app_text_style.dart';
 import '../../support/prefs.dart';
+import '../registration/registraction_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -72,7 +73,9 @@ class _LoginScreenState extends State<LoginScreen> {
   _signUpButton() => TextButton(
         onPressed: () {
           // context.launchLink('http://reg.coakerala.com');
-          Navigator.of(context).push(MaterialPageRoute(builder: (context)=> MobileVerification()));
+          // Navigator.of(context).push(MaterialPageRoute(builder: (context)=> MobileVerification()));
+          Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => const RegistrationForm()));
         },
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,

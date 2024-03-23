@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:coa/bloc/dashboard/dashboard_bloc.dart';
+import 'package:coa/screens/families/family_members.dart';
 import 'package:coa/support/app_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -39,6 +40,27 @@ class _ProfileViewState extends State<ProfileView> {
       appBar: AppBar(
         backgroundColor: AppColors.primaryLight,
         title: AppText.boldText('My Profile', size: 18),
+        actions: [
+          PopupMenuButton<String>(
+            surfaceTintColor: AppColors.white,
+            icon: const Icon(Icons.more_vert_rounded),
+            onSelected: (String result) {
+              switch (result) {
+                case 'Family':
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => FamilyMembers()));
+                  break;
+                default:
+              }
+            },
+            itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
+              PopupMenuItem<String>(
+                value: 'Family',
+                child: AppText.mediumText('Family Members'),
+              ),
+            ],
+          )
+        ],
       ),
       body: _body(),
     );

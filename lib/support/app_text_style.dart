@@ -40,7 +40,7 @@ class AppTextStyle {
 
   static mediumTextStyle({
     double size = 15,
-    Color color = AppColors.primary,
+    Color color = AppColors.text,
   }) =>
       TextStyle(
         fontFamily: font,

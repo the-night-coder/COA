@@ -135,8 +135,7 @@ extension AppSnackBars on BuildContext {
   }
 
   Future<void> launchLink(String url) async {
-    if (!await launchUrl(Uri.parse(url),
-        mode: LaunchMode.inAppBrowserView)) {
+    if (!await launchUrl(Uri.parse(url), mode: LaunchMode.inAppBrowserView)) {
       errorSnackBar('Error open $url');
     }
   }

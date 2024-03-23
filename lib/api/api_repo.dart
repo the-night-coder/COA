@@ -26,6 +26,13 @@ class ApiRepository {
   Future<ApiResponse<dynamic>> getShareDetails() async =>
       await _api.getShareDetails();
 
-  Future<ApiResponse<dynamic>> getSliders() async =>
-      await _api.getSliders();
+  Future<ApiResponse<dynamic>> getFamilyMembers() async =>
+      await _api.getFamilyMembers();
+
+  Future<ApiResponse<dynamic>> getRelations() async =>
+      await _api.getRelations();
+
+  Future<ApiResponse<dynamic>> addFamilyMember(dynamic data, String id) async =>
+      await _api.addFamilyMember(data, id);
+
 }

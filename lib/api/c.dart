@@ -7,5 +7,20 @@ class C {
   static const dashboard = '/members/dashboard';
   static const updateProfilePhoto = '/members/update/profile-photo';
   static const shareDetails = '/members/share/details';
+  static const familyMembers = '/members/familymembers';
+  static const relations = '/relations';
   static const sliders = '/members/sliders';
+
+  //Other
+
+  static const bloodGroups = [
+    'A+',
+    'A-',
+    'B+',
+    'B-',
+    'AB+',
+    'AB-',
+    'O+',
+    'O-',
+  ];
 }

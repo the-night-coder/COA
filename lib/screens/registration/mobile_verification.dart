@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:coa/screens/registration/registraction_screen.dart';
 import 'package:coa/support/widget_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -90,9 +91,10 @@ class _MobileVerificationState extends State<MobileVerification>
                 dismissOnTap: false);
           } else if (state is MobileVerifyBlocVerified) {
             EasyLoading.dismiss();
-            context.successDialog('Mobile Number Verified',
-                '${_bloc.mobile} is successfully verified', () {});
+            context.successSnackBar('Mobile Number Verified');
             _stopTimer();
+            Navigator.of(context).pushReplacement(MaterialPageRoute(
+                builder: (context) => const RegistrationForm()));
           }
         },
         builder: (context, state) {
@@ -195,6 +197,7 @@ class _MobileVerificationState extends State<MobileVerification>
                       }
                     }),
                   ),
+                  const SizedBox(height: 30),
                 ],
               ),
             ),

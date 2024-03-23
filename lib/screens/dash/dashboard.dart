@@ -7,7 +7,6 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:coa/api/api_repo.dart';
 import 'package:coa/bloc/dashboard/dashboard_bloc.dart';
 import 'package:coa/bloc/shares/share_details_bloc.dart';
-import 'package:coa/bloc/slider/slider_bloc.dart';
 import 'package:coa/screens/broadband_view/broadband_view.dart';
 import 'package:coa/screens/broadbands/broadbands.dart';
 import 'package:coa/screens/devices/devices.dart';

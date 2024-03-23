@@ -59,7 +59,8 @@ class ApiProvider {
     }
   }
 
-  Future<ApiResponse<dynamic>> updateProfile(File photo, String username) async {
+  Future<ApiResponse<dynamic>> updateProfile(
+      File photo, String username) async {
     try {
       var uri = Uri.parse('$_url${C.updateProfilePhoto}');
       var token = await Pref.getToken() ?? '';
@@ -81,6 +82,64 @@ class ApiProvider {
   Future<ApiResponse<dynamic>> getShareDetails() async {
     try {
       var uri = Uri.parse('$_url${C.shareDetails}');
+      var token = await Pref.getToken() ?? '';
+      var request = http.MultipartRequest(
+        'GET',
+        uri,
+      );
+      request.headers.addAll({'Authorization': 'Bearer $token'});
+      print(request.headers);
+      print(request.fields);
+      var res = await request.send();
+      return returnResponse(await http.Response.fromStream(res));
+    } catch (e) {
+      return ApiResponse.error('No Internet connection');
+    }
+  }
+
+  Future<ApiResponse<dynamic>> getFamilyMembers() async {
+    try {
+      var uri = Uri.parse('$_url${C.familyMembers}');
+      var token = await Pref.getToken() ?? '';
+      var request = http.MultipartRequest(
+        'GET',
+        uri,
+      );
+      request.headers.addAll({'Authorization': 'Bearer $token'});
+      print(request.headers);
+      print(request.fields);
+      var res = await request.send();
+      return returnResponse(await http.Response.fromStream(res));
+    } catch (e) {
+      return ApiResponse.error('No Internet connection');
+    }
+  }
+
+  Future<ApiResponse<dynamic>> addFamilyMember(
+      Map<String, String> data, String id) async {
+    try {
+      var uri = id.isEmpty
+          ? Uri.parse('$_url${C.familyMembers}')
+          : Uri.parse('$_url${C.familyMembers}/$id');
+      var token = await Pref.getToken() ?? '';
+      var request = http.MultipartRequest(
+        'POST',
+        uri,
+      );
+      request.headers.addAll({'Authorization': 'Bearer $token'});
+      request.fields.addAll(data);
+      print(request.headers);
+      print(request.fields);
+      var res = await request.send();
+      return returnResponse(await http.Response.fromStream(res));
+    } catch (e) {
+      return ApiResponse.error('No Internet connection');
+    }
+  }
+
+  Future<ApiResponse<dynamic>> getRelations() async {
+    try {
+      var uri = Uri.parse('$_url${C.familyMembers}');
       var token = await Pref.getToken() ?? '';
       var request = http.MultipartRequest(
         'GET',
