@@ -1,3 +1,4 @@
+import 'package:coa/screens/shares/add_share.dart';
 import 'package:flutter/material.dart';
 
 import '../../../support/app_colors.dart';
@@ -5,6 +6,7 @@ import '../../../support/app_text.dart';
 
 class AssociationTab extends StatefulWidget {
   final Function() callback;
+
   const AssociationTab({super.key, required this.callback});
 
   @override
@@ -26,11 +28,11 @@ class _AssociationTabState extends State<AssociationTab> {
             DropdownButtonFormField(
               items: const [
                 DropdownMenuItem(
-                  child: Text('Association A'),
+                  child: Text('Item 1'),
                   value: 'Association A',
                 ),
                 DropdownMenuItem(
-                  child: Text('Association B'),
+                  child: Text('Item 1'),
                   value: 'Association B',
                 ),
               ],
@@ -48,11 +50,11 @@ class _AssociationTabState extends State<AssociationTab> {
             DropdownButtonFormField(
               items: [
                 DropdownMenuItem(
-                  child: Text('Association A'),
+                  child: Text('Item 1'),
                   value: 'Association A',
                 ),
                 DropdownMenuItem(
-                  child: Text('Association B'),
+                  child: Text('Item 2'),
                   value: 'Association B',
                 ),
               ],
@@ -70,11 +72,11 @@ class _AssociationTabState extends State<AssociationTab> {
             DropdownButtonFormField(
               items: [
                 DropdownMenuItem(
-                  child: Text('Association A'),
+                  child: Text('Item 1'),
                   value: 'Association A',
                 ),
                 DropdownMenuItem(
-                  child: Text('Association B'),
+                  child: Text('Item 2'),
                   value: 'Association B',
                 ),
               ],
@@ -92,11 +94,11 @@ class _AssociationTabState extends State<AssociationTab> {
             DropdownButtonFormField(
               items: [
                 DropdownMenuItem(
-                  child: Text('Association A'),
+                  child: Text('Item 1'),
                   value: 'Association A',
                 ),
                 DropdownMenuItem(
-                  child: Text('Association B'),
+                  child: Text('Item 2'),
                   value: 'Association B',
                 ),
               ],
@@ -156,7 +158,7 @@ class _AssociationTabState extends State<AssociationTab> {
                   color: AppColors.primary,
                   onPressed: () {},
                   child:
-                      AppText.boldText('ADD MAGIC ID', color: AppColors.white),
+                      AppText.boldText('ADD BROADBAND ID', color: AppColors.white),
                 ),
               ),
             const SizedBox(height: 20),
@@ -202,7 +204,10 @@ class _AssociationTabState extends State<AssociationTab> {
                   elevation: 0,
                   highlightElevation: 0,
                   color: AppColors.primary,
-                  onPressed: () {},
+                  onPressed: () {
+                    // Navigator.of(context).push(MaterialPageRoute(
+                    //     builder: (context) => AddShare(keyValue: 'broadband_share')));
+                  },
                   child:
                       AppText.boldText('ADD MAGIC ID', color: AppColors.white),
                 ),

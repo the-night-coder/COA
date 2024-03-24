@@ -1,3 +1,4 @@
+import 'package:coa/screens/registration/forms/family.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -49,7 +50,7 @@ class _RegistrationFormState extends State<RegistrationForm>
               _tabController.animateTo(_tabController.index + 1);
             },
           ),
-          DocumentsTab(),
+          FamilyTab(callback: () {}),
         ],
       ),
     );
@@ -78,10 +79,19 @@ class _RegistrationFormState extends State<RegistrationForm>
   }
 }
 
-class ShareTab extends StatelessWidget {
+class ShareTab extends StatefulWidget {
   final Function() callback;
 
   const ShareTab({super.key, required this.callback});
+
+  @override
+  State<ShareTab> createState() => _ShareTabState();
+}
+
+class _ShareTabState extends State<ShareTab> {
+  String _kcclGroupValue = 'No';
+  String _cdcoGroupValue = 'No';
+  String _kcblGroupValue = 'No';
 
   @override
   Widget build(BuildContext context) {
@@ -90,28 +100,151 @@ class ShareTab extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          DropdownButtonFormField(
-            items: [
-              DropdownMenuItem(
-                child: Text('Share A'),
-                value: 'Share A',
+          const SizedBox(height: 20),
+          AppText.mediumText('KCCL Folio'),
+          const SizedBox(height: 5),
+          Row(
+            children: [
+              Expanded(
+                child: RadioListTile(
+                  title: Text('Yes'),
+                  value: 'Yes',
+                  groupValue: _kcclGroupValue,
+                  onChanged: (value) {
+                    setState(() {
+                      _kcclGroupValue = value!;
+                    });
+                  },
+                ),
               ),
-              DropdownMenuItem(
-                child: Text('Share B'),
-                value: 'Share B',
+              Expanded(
+                child: RadioListTile(
+                  title: Text('No'),
+                  value: 'No',
+                  groupValue: _kcclGroupValue,
+                  onChanged: (value) {
+                    setState(() {
+                      _kcclGroupValue = value!;
+                    });
+                  },
+                ),
               ),
             ],
-            onChanged: (value) {
-              // Handle share dropdown value change
-            },
-            decoration: InputDecoration(labelText: 'Share'),
-            validator: (value) {
-              if (value == null) {
-                return 'Please select share';
-              }
-              return null;
-            },
           ),
+          if (_kcclGroupValue == 'Yes')
+            Container(
+              padding: const EdgeInsets.all(15),
+              decoration: BoxDecoration(
+                  color: AppColors.primaryBackground,
+                  borderRadius: BorderRadius.circular(5),
+                  border: Border.all(color: AppColors.primary)),
+              child: MaterialButton(
+                padding: const EdgeInsets.all(14),
+                elevation: 0,
+                highlightElevation: 0,
+                color: AppColors.primary,
+                onPressed: () {},
+                child: AppText.boldText('ADD KCCL FOLIO',
+                    color: AppColors.white, size: 12),
+              ),
+            ),
+          const SizedBox(height: 20),
+          AppText.mediumText('CDCO Folio'),
+          const SizedBox(height: 5),
+          Row(
+            children: [
+              Expanded(
+                child: RadioListTile(
+                  title: Text('Yes'),
+                  value: 'Yes',
+                  groupValue: _cdcoGroupValue,
+                  onChanged: (value) {
+                    setState(() {
+                      _cdcoGroupValue = value!;
+                    });
+                  },
+                ),
+              ),
+              Expanded(
+                child: RadioListTile(
+                  title: Text('No'),
+                  value: 'No',
+                  groupValue: _cdcoGroupValue,
+                  onChanged: (value) {
+                    setState(() {
+                      _cdcoGroupValue = value!;
+                    });
+                  },
+                ),
+              ),
+            ],
+          ),
+          if (_cdcoGroupValue == 'Yes')
+            Container(
+              padding: const EdgeInsets.all(15),
+              decoration: BoxDecoration(
+                  color: AppColors.primaryBackground,
+                  borderRadius: BorderRadius.circular(5),
+                  border: Border.all(color: AppColors.primary)),
+              child: MaterialButton(
+                padding: const EdgeInsets.all(14),
+                elevation: 0,
+                highlightElevation: 0,
+                color: AppColors.primary,
+                onPressed: () {},
+                child: AppText.boldText('ADD CDCO FOLIO',
+                    color: AppColors.white, size: 12),
+              ),
+            ),
+          const SizedBox(height: 20),
+          AppText.mediumText('KCBL Folio'),
+          const SizedBox(height: 5),
+          Row(
+            children: [
+              Expanded(
+                child: RadioListTile(
+                  title: Text('Yes'),
+                  value: 'Yes',
+                  groupValue: _kcblGroupValue,
+                  onChanged: (value) {
+                    setState(() {
+                      _kcblGroupValue = value!;
+                    });
+                  },
+                ),
+              ),
+              Expanded(
+                child: RadioListTile(
+                  title: Text('No'),
+                  value: 'No',
+                  groupValue: _kcblGroupValue,
+                  onChanged: (value) {
+                    setState(() {
+                      _kcblGroupValue = value!;
+                    });
+                  },
+                ),
+              ),
+            ],
+          ),
+          if (_kcblGroupValue == 'Yes')
+            Container(
+              padding: const EdgeInsets.all(15),
+              decoration: BoxDecoration(
+                  color: AppColors.primaryBackground,
+                  borderRadius: BorderRadius.circular(5),
+                  border: Border.all(color: AppColors.primary)),
+              child: MaterialButton(
+                padding: const EdgeInsets.all(14),
+                elevation: 0,
+                highlightElevation: 0,
+                color: AppColors.primary,
+                onPressed: () {},
+                child: AppText.boldText('ADD KCBL FOLIO',
+                    color: AppColors.white, size: 12),
+              ),
+            ),
+          const SizedBox(height: 20),
           SizedBox(
             width: MediaQuery.of(context).size.width,
             child: MaterialButton(
@@ -120,35 +253,12 @@ class ShareTab extends StatelessWidget {
               highlightElevation: 0,
               color: AppColors.primary,
               onPressed: () {
-                callback();
+                widget.callback();
               },
               child: AppText.boldText('CONTINUE', color: AppColors.white),
             ),
           ),
           const SizedBox(height: 20),
-        ],
-      ),
-    );
-  }
-}
-
-class DocumentsTab extends StatelessWidget {
-  const DocumentsTab({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(16.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          // Add image upload option
-          TextButton(
-            onPressed: () {
-              // Implement image upload functionality
-            },
-            child: Text('Upload Image'),
-          ),
         ],
       ),
     );
