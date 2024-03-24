@@ -8,6 +8,9 @@ class C {
   static const updateProfilePhoto = '/members/update/profile-photo';
   static const shareDetails = '/members/share/details';
   static const familyMembers = '/members/familymembers';
+  static const unlinkShare = '/members/unlink/share';
+  static const searchShare = '/members/search/unlinked';
+  static const linkShare = '/members/link/share';
   static const relations = '/relations';
   static const sliders = '/members/sliders';
 

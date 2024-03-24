@@ -47,9 +47,9 @@ class _DashboardState extends State<Dashboard> {
 
   @override
   void initState() {
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark.copyWith(
-        statusBarColor: Colors.transparent,
-        systemNavigationBarColor: AppColors.primary));
+    // SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark.copyWith(
+    //     statusBarColor: Colors.transparent,
+    //     systemNavigationBarColor: AppColors.primary));
     _bloc.add(DashboardBlocLoadEvent());
     _shareBloc.add(LoadShareDetailsEvent());
     _getUser();
@@ -220,7 +220,7 @@ class _DashboardState extends State<Dashboard> {
         body: _body(),
         bottomNavigationBar: Container(
           height: 70,
-          color: AppColors.primary,
+          color: AppColors.white,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
@@ -233,8 +233,8 @@ class _DashboardState extends State<Dashboard> {
                     onPressed: () {},
                     child: Column(
                       children: [
-                        const Icon(Icons.home_outlined, color: AppColors.white),
-                        AppText.mediumText('Home', color: AppColors.white),
+                        const Icon(Icons.home_outlined),
+                        AppText.mediumText('Home'),
                       ],
                     ),
                   ),
@@ -246,10 +246,8 @@ class _DashboardState extends State<Dashboard> {
                     padding: EdgeInsets.zero,
                     child: Column(
                       children: [
-                        const Icon(Icons.person_outline_rounded,
-                            color: AppColors.white),
-                        AppText.mediumText('My Profile',
-                            color: AppColors.white),
+                        const Icon(Icons.person_outline_rounded),
+                        AppText.mediumText('My Profile'),
                       ],
                     ),
                   ),
@@ -261,9 +259,8 @@ class _DashboardState extends State<Dashboard> {
                     padding: EdgeInsets.zero,
                     child: Column(
                       children: [
-                        const Icon(Icons.settings_outlined,
-                            color: AppColors.white),
-                        AppText.mediumText('Settings', color: AppColors.white),
+                        const Icon(Icons.settings_outlined),
+                        AppText.mediumText('Settings'),
                       ],
                     ),
                   ),
@@ -275,9 +272,8 @@ class _DashboardState extends State<Dashboard> {
                     padding: EdgeInsets.zero,
                     child: Column(
                       children: [
-                        const Icon(Icons.support_agent_rounded,
-                            color: AppColors.white),
-                        AppText.mediumText('Help', color: AppColors.white),
+                        const Icon(Icons.support_agent_rounded),
+                        AppText.mediumText('Help'),
                       ],
                     ),
                   ),
@@ -416,77 +412,107 @@ class _DashboardState extends State<Dashboard> {
                             color: AppColors.primaryLight),
                         child: _slider(_dash?['welcome_messages'] ?? [])),
                     const SizedBox(height: 15),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: MaterialButton(
-                            onPressed: () {
-                              Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => const Devices()));
-                            },
-                            padding: const EdgeInsets.all(10),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(16),
-                              side: const BorderSide(
-                                  width: 1.5, color: AppColors.hint),
-                            ),
-                            child: Column(
-                              children: [
-                                Image.asset(
-                                  AppIcons.cableTv,
-                                  width: 60,
-                                ),
-                                const SizedBox(height: 10),
-                                AppText.mediumText('Digital IDs',
-                                    color: AppColors.primary)
-                              ],
-                            ),
-                          ),
-                        ),
-                        const SizedBox(width: 15),
-                        Expanded(
-                          child: MaterialButton(
-                            onPressed: () {
-                              Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => const Broadband()));
-                            },
-                            padding: const EdgeInsets.all(10),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(16),
-                              side: const BorderSide(
-                                  width: 1.5, color: AppColors.hint),
-                            ),
-                            child: Column(
-                              children: [
-                                Image.asset(
-                                  AppIcons.wifiSignal,
-                                  width: 60,
-                                ),
-                                const SizedBox(height: 10),
-                                AppText.mediumText('Broadband IDs',
-                                    color: AppColors.primary)
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 30),
-                    AppText.boldText('Shares'),
-                    const SizedBox(height: 15),
                     BlocBuilder(
                         bloc: _shareBloc,
                         builder: (context, state) {
                           if (state is ShareDetailsSuccess) {
-                            return Wrap(
-                              alignment: WrapAlignment.start,
+                            return Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
                               children: [
-                                _shareTile(state.data, 'kccl_folio', 'KCCL'),
-                                _shareTile(state.data, 'kcbl_folio', 'KCBL'),
-                                _shareTile(state.data, 'kvbl_folio', 'KVBL'),
-                                _shareTile(state.data, 'kvnews_folio', 'NEWS'),
-                                _shareTile(state.data, 'cidco_membership', 'CIDO'),
-                                // _shareTile(state.data, 'broadband_share', 'CIDO'),
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: MaterialButton(
+                                        onPressed: () {
+                                          Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                              builder: (context) => Shares(
+                                                list: (state.data['shares']
+                                                        ?['magic_share']) ??
+                                                    [],
+                                                keyValue: 'magic_share',
+                                              ),
+                                            ),
+                                          );
+                                        },
+                                        padding: const EdgeInsets.all(10),
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(16),
+                                          side: const BorderSide(
+                                              width: 1.5,
+                                              color: AppColors.hint),
+                                        ),
+                                        child: Column(
+                                          children: [
+                                            Image.asset(
+                                              AppIcons.cableTv,
+                                              width: 60,
+                                            ),
+                                            const SizedBox(height: 10),
+                                            AppText.mediumText('Magic IDs',
+                                                color: AppColors.primary)
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                    const SizedBox(width: 15),
+                                    Expanded(
+                                      child: MaterialButton(
+                                        onPressed: () {
+                                          Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                              builder: (context) => Shares(
+                                                list: (state.data['shares']
+                                                        ?['broadband_share']) ??
+                                                    [],
+                                                keyValue: 'broadband_share',
+                                              ),
+                                            ),
+                                          );
+                                        },
+                                        padding: const EdgeInsets.all(10),
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(16),
+                                          side: const BorderSide(
+                                              width: 1.5,
+                                              color: AppColors.hint),
+                                        ),
+                                        child: Column(
+                                          children: [
+                                            Image.asset(
+                                              AppIcons.wifiSignal,
+                                              width: 60,
+                                            ),
+                                            const SizedBox(height: 10),
+                                            AppText.mediumText('Broadband IDs',
+                                                color: AppColors.primary)
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(height: 30),
+                                AppText.boldText('Shares'),
+                                const SizedBox(height: 15),
+                                Wrap(
+                                  alignment: WrapAlignment.start,
+                                  children: [
+                                    _shareTile(
+                                        state.data, 'kccl_folio', 'KCCL'),
+                                    _shareTile(
+                                        state.data, 'kcbl_folio', 'KCBL'),
+                                    _shareTile(
+                                        state.data, 'kvbl_folio', 'KVBL'),
+                                    _shareTile(
+                                        state.data, 'cidco_membership', 'CIDO'),
+                                    _shareTile(
+                                        state.data, 'kvnews_folio', 'NEWS'),
+                                    // _shareTile(state.data, 'broadband_share', 'CIDO'),
+                                  ],
+                                ),
                               ],
                             );
                           } else if (state is ShareDetailsFailed) {
@@ -522,10 +548,10 @@ class _DashboardState extends State<Dashboard> {
       });
 
   _shareTile(dynamic data, String key, String title) {
-    if (((data['shares']?[key] ?? []) as List<dynamic>).isNotEmpty) {
-      return _listIte(title, data['shares']?[key], key);
-    }
-    return const SizedBox(width: 0, height: 0);
+    List<dynamic> list = (data['shares']?[key] ?? []);
+    // if (((data['shares']?[key] ?? []) as List<dynamic>).isNotEmpty) {
+    return _listIte(title, list, key);
+    // }
   }
 
   Builder _slider(List<dynamic> list) => Builder(builder: (context) {

@@ -47,8 +47,8 @@ class _ProfileViewState extends State<ProfileView> {
             onSelected: (String result) {
               switch (result) {
                 case 'Family':
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => FamilyMembers()));
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => FamilyMembers()));
                   break;
                 default:
               }
@@ -79,7 +79,9 @@ class _ProfileViewState extends State<ProfileView> {
           child: Column(
             children: [
               const SizedBox(height: 20),
-              _header(_user['media']?[0]?['original_url']),
+              _header(((_user['media'] ?? []) as List<dynamic>).isNotEmpty ?
+                      (_user['media']?[0]?['original_url'])
+                  : null),
               const SizedBox(height: 20),
               AppText.boldText(_user['name'] ?? 'Loading', size: 16),
               const SizedBox(height: 5),

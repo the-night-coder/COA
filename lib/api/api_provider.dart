@@ -137,6 +137,63 @@ class ApiProvider {
     }
   }
 
+  Future<ApiResponse<dynamic>> unlinkShare(String type, String id) async {
+    try {
+      var uri = Uri.parse('$_url${C.unlinkShare}');
+      var token = await Pref.getToken() ?? '';
+      var request = http.MultipartRequest(
+        'POST',
+        uri,
+      );
+      request.headers.addAll({'Authorization': 'Bearer $token'});
+      request.fields.addAll({'type': type, 'share_id': id});
+      print(request.headers);
+      print(request.fields);
+      var res = await request.send();
+      return returnResponse(await http.Response.fromStream(res));
+    } catch (e) {
+      return ApiResponse.error('No Internet connection');
+    }
+  }
+
+  Future<ApiResponse<dynamic>> linkShare(String type, String id) async {
+    try {
+      var uri = Uri.parse('$_url${C.linkShare}');
+      var token = await Pref.getToken() ?? '';
+      var request = http.MultipartRequest(
+        'POST',
+        uri,
+      );
+      request.headers.addAll({'Authorization': 'Bearer $token'});
+      request.fields.addAll({'type': type, 'share_id': id});
+      print(request.headers);
+      print(request.fields);
+      var res = await request.send();
+      return returnResponse(await http.Response.fromStream(res));
+    } catch (e) {
+      return ApiResponse.error('No Internet connection');
+    }
+  }
+
+  Future<ApiResponse<dynamic>> searchShare(String type, String search) async {
+    try {
+      var uri = Uri.parse('$_url${C.searchShare}');
+      var token = await Pref.getToken() ?? '';
+      var request = http.MultipartRequest(
+        'POST',
+        uri,
+      );
+      request.headers.addAll({'Authorization': 'Bearer $token'});
+      request.fields.addAll({'type': type, 'search': search});
+      print(request.headers);
+      print(request.fields);
+      var res = await request.send();
+      return returnResponse(await http.Response.fromStream(res));
+    } catch (e) {
+      return ApiResponse.error('No Internet connection');
+    }
+  }
+
   Future<ApiResponse<dynamic>> getRelations() async {
     try {
       var uri = Uri.parse('$_url${C.familyMembers}');

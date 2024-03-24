@@ -108,41 +108,42 @@ class _AppDrawerState extends State<AppDrawer> {
                   MaterialPageRoute(builder: (context) => const ProfileView()));
             },
           ),
-          Padding(
-            padding: const EdgeInsets.all(16),
-            child: AppText.mediumText('IDs', color: AppColors.hint),
-          ),
-          ListTile(
-            leading: const Icon(Icons.device_hub_rounded),
-            title: AppText.mediumText('Digital IDs', size: 16),
-            onTap: () {
-              Navigator.pop(context);
-              Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => const Devices()));
-            },
-          ),
-          ListTile(
-            leading: const Icon(Icons.wifi_tethering_rounded),
-            title: AppText.mediumText('Broadband IDs', size: 16),
-            onTap: () {
-              Navigator.pop(context);
-              Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => const Broadband()));
-            },
-          ),
-          Padding(
-            padding: const EdgeInsets.all(16),
-            child: AppText.mediumText('Others', color: AppColors.hint),
-          ),
-          ListTile(
-            leading: const Icon(Icons.handshake_rounded),
-            title: AppText.mediumText('Shares', size: 16),
-            onTap: () {
-              Navigator.pop(context);
-              // Navigator.of(context).push(MaterialPageRoute(
-              //     builder: (context) => const FindCustomer()));
-            },
-          ),
+          // Padding(
+          //   padding: const EdgeInsets.all(16),
+          //   child: AppText.mediumText('IDs', color: AppColors.hint),
+          // ),
+          // ListTile(
+          //   leading: const Icon(Icons.device_hub_rounded),
+          //   title: AppText.mediumText('Digital IDs', size: 16),
+          //   onTap: () {
+          //     Navigator.pop(context);
+          //     Navigator.of(context).push(
+          //         MaterialPageRoute(builder: (context) => const Devices()));
+          //   },
+          // ),
+          // ListTile(
+          //   leading: const Icon(Icons.wifi_tethering_rounded),
+          //   title: AppText.mediumText('Broadband IDs', size: 16),
+          //   onTap: () {
+          //     Navigator.pop(context);
+          //     Navigator.of(context).push(
+          //         MaterialPageRoute(builder: (context) => const Broadband()));
+          //   },
+          // ),
+          // Padding(
+          //   padding: const EdgeInsets.all(16),
+          //   child: AppText.mediumText('Others', color: AppColors.hint),
+          // ),
+          const Divider(),
+          // ListTile(
+          //   leading: const Icon(Icons.handshake_rounded),
+          //   title: AppText.mediumText('Shares', size: 16),
+          //   onTap: () {
+          //     Navigator.pop(context);
+          //     // Navigator.of(context).push(MaterialPageRoute(
+          //     //     builder: (context) => const FindCustomer()));
+          //   },
+          // ),
           ListTile(
             leading: const Icon(Icons.person_search_rounded),
             title: AppText.mediumText('Find a Member', size: 16),

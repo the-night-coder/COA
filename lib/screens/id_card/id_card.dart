@@ -60,7 +60,10 @@ class _IdCardState extends State<IdCard> {
                 padding: const EdgeInsets.all(15),
                 child: Column(
                   children: [
-                    _profileImage(_user?['media']?[0]?['original_url']),
+                    _profileImage(
+                        ((_user['media'] ?? []) as List<dynamic>).isNotEmpty
+                            ? (_user['media']?[0]?['original_url'])
+                            : null),
                     const SizedBox(height: 15),
                     AppText.boldText(_user?['name'] ?? 'Loading', size: 18),
                     AppText.mediumText(_user?['register_no'] ?? 'Loading',
