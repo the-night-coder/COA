@@ -11,7 +11,9 @@ import '../../support/app_colors.dart';
 import '../../support/prefs.dart';
 
 class IdCard extends StatefulWidget {
-  const IdCard({super.key});
+  final dynamic user;
+
+  const IdCard({super.key, this.user});
 
   @override
   State<IdCard> createState() => _IdCardState();
@@ -23,8 +25,12 @@ class _IdCardState extends State<IdCard> {
 
   @override
   void initState() {
-    _getUser();
-    _bloc.add(DashboardBlocLoadEvent());
+    if (widget.user == null) {
+      _getUser();
+      _bloc.add(DashboardBlocLoadEvent());
+    } else {
+      _user = widget.user;
+    }
     super.initState();
   }
 
@@ -68,10 +74,10 @@ class _IdCardState extends State<IdCard> {
                     AppText.boldText(_user?['name'] ?? 'Loading', size: 18),
                     AppText.mediumText(_user?['register_no'] ?? 'Loading',
                         color: AppColors.hint),
-                    AppText.regularText(_user?['role'] ?? 'Loading',
+                    AppText.regularText(_user?['role'] ?? '',
                         color: AppColors.hint),
                     AppText.regularText(
-                        "${_user?['district_name'] ?? 'Loading'}, ${_user?['mekhala_name'] ?? 'Loading'}",
+                        "${_user?['district_name'] ?? _user?['district'] ?? 'Loading'}, ${_user?['mekhala_name'] ?? _user?['mekhala'] ?? 'Loading'}",
                         color: AppColors.hint),
                     SizedBox(
                       width: 200,

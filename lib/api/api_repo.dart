@@ -25,6 +25,15 @@ class ApiRepository {
   Future<ApiResponse<dynamic>> getShareDetails() async =>
       await _api.getShareDetails();
 
+  Future<ApiResponse<dynamic>> findMember(
+          String dist, String mek, String search) async =>
+      await _api.findMember(dist, mek, search);
+
+  Future<ApiResponse<dynamic>> getMekhala(String id) async =>
+      await _api.getMekhala(id);
+
+  Future<ApiResponse<dynamic>> getDistrict() async => await _api.getDistrict();
+
   Future<ApiResponse<dynamic>> getFamilyMembers() async =>
       await _api.getFamilyMembers();
 

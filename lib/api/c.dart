@@ -7,6 +7,9 @@ class C {
   static const dashboard = '/members/dashboard';
   static const updateProfilePhoto = '/members/update/profile-photo';
   static const shareDetails = '/members/share/details';
+  static const mekhala = '/mekhalas';
+  static const districts = '/districts';
+  static const searchMember = '/members/search';
   static const familyMembers = '/members/familymembers';
   static const unlinkShare = '/members/unlink/share';
   static const searchShare = '/members/search/unlinked';

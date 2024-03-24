@@ -46,8 +46,10 @@ class _SharesState extends State<Shares> {
           : Center(
               child: AppText.boldText('No Share.'),
             ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: AppColors.primary,
+      floatingActionButton: MaterialButton(
+        padding: const EdgeInsets.symmetric(vertical: 10),
+        color: AppColors.primary,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         onPressed: () {
           Navigator.of(context).push(MaterialPageRoute(
               builder: (context) => AddShare(keyValue: widget.keyValue)));

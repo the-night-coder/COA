@@ -97,6 +97,63 @@ class ApiProvider {
     }
   }
 
+  Future<ApiResponse<dynamic>> getMekhala(String id) async {
+    try {
+      var uri = Uri.parse('$_url${C.mekhala}/$id');
+      var token = await Pref.getToken() ?? '';
+      var request = http.MultipartRequest(
+        'GET',
+        uri,
+      );
+      request.headers.addAll({'Authorization': 'Bearer $token'});
+      print(request.headers);
+      print(request.fields);
+      var res = await request.send();
+      return returnResponse(await http.Response.fromStream(res));
+    } catch (e) {
+      return ApiResponse.error('No Internet connection');
+    }
+  }
+
+  Future<ApiResponse<dynamic>> getDistrict() async {
+    try {
+      var uri = Uri.parse('$_url${C.districts}');
+      var token = await Pref.getToken() ?? '';
+      var request = http.MultipartRequest(
+        'GET',
+        uri,
+      );
+      request.headers.addAll({'Authorization': 'Bearer $token'});
+      print(request.headers);
+      print(request.fields);
+      var res = await request.send();
+      return returnResponse(await http.Response.fromStream(res));
+    } catch (e) {
+      return ApiResponse.error('No Internet connection');
+    }
+  }
+
+  Future<ApiResponse<dynamic>> findMember(
+      String dist, String mek, String search) async {
+    try {
+      var uri = Uri.parse('$_url${C.searchMember}');
+      var token = await Pref.getToken() ?? '';
+      var request = http.MultipartRequest(
+        'POST',
+        uri,
+      );
+      request.headers.addAll({'Authorization': 'Bearer $token'});
+      request.fields
+          .addAll({'search': search, 'district_id': dist, 'mekhala_id': mek});
+      print(request.headers);
+      print(request.fields);
+      var res = await request.send();
+      return returnResponse(await http.Response.fromStream(res));
+    } catch (e) {
+      return ApiResponse.error('No Internet connection');
+    }
+  }
+
   Future<ApiResponse<dynamic>> getFamilyMembers() async {
     try {
       var uri = Uri.parse('$_url${C.familyMembers}');
